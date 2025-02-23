@@ -1,22 +1,31 @@
 import Image from "next/image";
-const PRopertyListItem = ()=>{
+import { PropertyType } from "./PropertyList";
+
+interface PropertyProps {
+    property: PropertyType,
+}
+
+
+const PRopertyListItem: React.FC<PropertyProps> = ({
+    property,
+})=>{
     return(
         <div className="cursor-pointer">
             <div className="relative overflow-hidden aspect-square rounded-xl">
                 <Image
                         fill
-                        src='/beach_1.jpg'
+                        src={property.image_url}
                         sizes="(max-width: 768px) 768px, (max-width: 1200px): 768px, 768px"
                         className="hover:scale-110 object-cover transition h-full w-full"
                         alt="Beach house"
                     />
             </div>
             <div className="text-lg font-bold">
-                Property name
+                {property.title}
             </div>
 
             <div className="mt-2">
-                <p className="text-sm text-gray-500"><strong>$200</strong> per nigth</p>
+                <p className="text-sm text-gray-500"><strong>${property.price_per_night}</strong> per nigth</p>
             </div>
         </div>
     )
