@@ -18,6 +18,8 @@ const PropertyList = ()=>{
     const getProperties = async () =>{
         const tmpProperties = await apiService.get('/api/properties/')
 
+        console.log(tmpProperties);  // Verifica la respuesta
+        setProperties(tmpProperties.data || []); 
         setProperties(tmpProperties.data);
     };
     useEffect(()=>{

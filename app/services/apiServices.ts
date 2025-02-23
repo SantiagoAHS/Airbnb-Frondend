@@ -3,7 +3,7 @@ const apiService = {
         console.log('get', url);
 
         return new Promise((resolve, reject) => {
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {  // Cambié `URL` por `url`
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -13,14 +13,38 @@ const apiService = {
                 .then(response => response.json())
                 .then((json) => {
                     console.log('Response:', json);
+
                     resolve(json);
                 })
-                .catch((error) => {  // Corregí el manejo del error
-                    console.error('Fetch error:', error);
-                    reject(error);  // Usa `reject` en lugar de `rejects`
-                });
-        });
+                .catch((error) => {
+                    reject(error);  
+                })
+        })
+    },
+
+    post: async function (url:string , data: any): Promise<any>{
+            console.log('post', url, data)
+
+            return new Promise((resolve, reject) => {
+                fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then((json) => {
+                            console.log('Response:', json);
+
+                            resolve(json); 
+                        })
+                        .catch((error) => {
+                            reject(error);  
+                        })
+        })
     }
-};
+}
 
 export default apiService;
