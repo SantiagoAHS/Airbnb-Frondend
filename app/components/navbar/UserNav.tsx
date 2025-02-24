@@ -3,13 +3,18 @@
 import { useState } from "react";
 
 import MenuLink from "./MenuLink";
+import LogoutButton from "../LogoutButton";
 
 import useLoginModal from "@/app/hooks/userLoginModal";
 import useSignupModal from "@/app/hooks/useSignupModal";
 
+interface UserNavProps {
+    userId?: string | null;
+}
 
-
-const UserNav = ()=>{
+const UserNav: React.FC<UserNavProps> = ({
+    userId
+})=>{
     const loginModal = useLoginModal();
     const SignupModal = useSignupModal();
     const [isOpen, setIsOpen] = useState(false)
@@ -29,23 +34,30 @@ const UserNav = ()=>{
 
             {isOpen && (
                 <div className="w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer">
-                    <MenuLink
-                        label='log in'
-                        onClick={
-                            ()=> {
-                                setIsOpen(false);
-                                loginModal.open();
-                        }}
-                    />
+                    { userId? (
+                        <LogoutButton/>
+                    ): (
+                        <>
+                            <MenuLink
+                                label='log in'
+                                onClick={
+                                    ()=> {
+                                        setIsOpen(false);
+                                        loginModal.open();
+                                }}
+                            />
 
-                    <MenuLink
-                        label='Sing in'
-                        onClick={
-                            ()=> {
-                                setIsOpen(false);
-                                SignupModal.open();
-                        }}
-                    />
+                            <MenuLink
+                                label='Sing in'
+                                onClick={
+                                    ()=> {
+                                        setIsOpen(false);
+                                        SignupModal.open();
+                                }}
+                            />
+                        </>
+                    )}
+
                 </div>
             )}
         </div>
